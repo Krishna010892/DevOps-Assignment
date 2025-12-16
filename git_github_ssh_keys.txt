@@ -1,0 +1,44 @@
+GIT & GITHUB SSH KEYS SETUP (WINDOWS / LINUX / MAC)
+
+STEP 1: Generate SSH Key
+
+ssh-keygen -t ed25519 -C “your_github_email@example.com”
+
+(If ed25519 is not supported) ssh-keygen -t rsa -b 4096 -C
+“your_github_email@example.com”
+
+STEP 2: Start SSH Agent
+
+eval “$(ssh-agent -s)”
+
+STEP 3: Add SSH Key to Agent
+
+ssh-add ~/.ssh/id_ed25519 (or use id_rsa if you created RSA key)
+
+STEP 4: Copy Public Key
+
+cat ~/.ssh/id_ed25519.pub
+
+Copy the full output starting with ‘ssh-ed25519’
+
+STEP 5: Add SSH Key to GitHub
+
+1.  Go to GitHub → Settings
+2.  Open “SSH and GPG keys”
+3.  Click “New SSH key”
+4.  Paste the copied key
+5.  Save
+
+STEP 6: Test SSH Connection
+
+ssh -T git@github.com
+
+Expected output: Hi ! You’ve successfully authenticated.
+
+STEP 7: Clone Repository Using SSH
+
+git clone git@github.com:username/repository.git
+
+OPTIONAL FIX (If Permission Denied)
+
+chmod 600 ~/.ssh/id_ed25519 chmod 644 ~/.ssh/id_ed25519.pub
